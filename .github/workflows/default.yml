@@ -1,0 +1,96 @@
+name: Default
+on:
+  push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      pubsub:
+        image: getalma/gcp-pubsub-emulator
+    env:
+      PUBSUB_EMULATOR_HOST: pubsub:8085
+      GOOGLE_CLOUD_PROJECT: test-project
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: 'yarn'
+#      - uses: fsouza/fake-gcs-action@v0.3.3
+#        with:
+#          version: "1.22.2"
+#          backend: memory
+#          data: data
+#          public-host: "localhost:5100"
+#          external-url: "http://localhost:5100"
+      - run: make
+      - run: make verify
+      - run: make dev-services
+      - uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist
+  deploy-graphql-to-staging:
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    container: google/cloud-sdk:slim
+    environment: staging
+    env:
+      GCLOUD_SERVICE_ACCOUNT: ${{ secrets.GCLOUD_SERVICE_ACCOUNT }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - run: TARGET=staging make deploy-graphql
+  deploy-worker-to-staging:
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    container: google/cloud-sdk:slim
+    environment: staging
+    env:
+      GCLOUD_SERVICE_ACCOUNT: ${{ secrets.GCLOUD_SERVICE_ACCOUNT }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - run: TARGET=staging make deploy-worker
+  deploy-graphql-to-production:
+    needs:
+      - deploy-graphql-to-staging
+      - deploy-worker-to-staging
+    runs-on: ubuntu-latest
+    container: google/cloud-sdk:slim
+    environment: production
+    env:
+      GCLOUD_SERVICE_ACCOUNT: ${{ secrets.GCLOUD_SERVICE_ACCOUNT }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - run: DEPLOY_TARGET=production make deploy-graphql
+  deploy-worker-to-production:
+    needs:
+      - deploy-graphql-to-staging
+      - deploy-worker-to-staging
+    runs-on: ubuntu-latest
+    container: google/cloud-sdk:slim
+    environment: production
+    env:
+      GCLOUD_SERVICE_ACCOUNT: ${{ secrets.GCLOUD_SERVICE_ACCOUNT }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - run: DEPLOY_TARGET=production make deploy-worker
+
