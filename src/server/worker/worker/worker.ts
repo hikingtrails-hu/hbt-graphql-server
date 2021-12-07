@@ -12,20 +12,15 @@ export type Jobs<M extends WorkerMessage> = {
 
 export class InvalidMessage extends Error {}
 
-export class Worker<M extends WorkerMessage> {
-    constructor(
-        private readonly jobs: Jobs<M>
-    ) {}
+export type HandleMessage<M extends WorkerMessage> = (message: M) => Promise<void>
 
-    public async handle(message: M): Promise<void> {
-        const job = this.jobs[message.type as M['type']]
+export type SendMessage = <M extends WorkerMessage>(message: M) => Promise<void>
+
+export const handleMessage = <M extends WorkerMessage>(jobs: Jobs<M>): HandleMessage<M> =>
+    async (message: M): Promise<void> => {
+        const job = jobs[message.type as M['type']]
         if (!job) {
             throw new InvalidMessage(`Invalid message: ${JSON.stringify(message)}`)
         }
         void await job(message.data as unknown as never)
     }
-}
-
-export interface Sender {
-    send: <M extends WorkerMessage>(message: M) => Promise<void>
-}

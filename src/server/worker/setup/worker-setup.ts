@@ -1,7 +1,6 @@
-import { Jobs, Sender, WorkerMessage } from '../worker/worker'
-import { loadData } from '../../load/load-data'
+import { Jobs, WorkerMessage } from '../worker/worker'
 import { HikingTrailKey } from '../../../hbt/hiking-trails'
-import { loadHikingTrail } from '../../load/load-hiking-trail'
+import { DependencyInjection } from '../../di/dependency-injection'
 
 export interface LoadHikingTrailRequestData { key: HikingTrailKey }
 
@@ -13,7 +12,7 @@ export type LoadHikingTrailRequestMessage = WorkerMessage<
 
 export type MessageType = DataLoadRequestMessage | LoadHikingTrailRequestMessage
 
-export const jobs = (sender: Sender): Jobs<MessageType> => ({
-    DataLoadRequest: async () => await loadData(sender)(),
-    LoadHikingTrailRequest: async (data: LoadHikingTrailRequestData) => await loadHikingTrail(data)
+export const jobs = (di: DependencyInjection): Jobs<MessageType> => ({
+    DataLoadRequest: di.loadData(),
+    LoadHikingTrailRequest: di.loadHikingTrail()
 })

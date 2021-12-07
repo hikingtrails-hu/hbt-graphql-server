@@ -1,10 +1,10 @@
 import { handler } from '../../src/server/worker/serverless-handler'
 import { Message } from '@google-cloud/pubsub'
 import { createTopic } from '../../src/server/worker/pubsub/pubsub'
-import { pubsubConfig } from '../../src/server/config/config'
+import { config } from '../../src/server/config/config'
 
 const main = async () => {
-    const topic = createTopic(pubsubConfig().topicName)
+    const topic = createTopic(config.pubsubConfig().topicName)
     const [topicExists] = await topic.exists()
     if (!topicExists) {
         const [created] = await topic.create()

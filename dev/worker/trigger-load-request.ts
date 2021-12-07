@@ -1,7 +1,7 @@
-import { PubSubSender } from '../../src/server/worker/pubsub/pubsub'
-import { pubsubConfig } from '../../src/server/config/config'
+import { sendPubSubMessage } from '../../src/server/worker/pubsub/pubsub'
+import { config } from '../../src/server/config/config'
 import { MessageType } from '../../src/server/worker/setup/worker-setup'
 
-const sender = new PubSubSender(pubsubConfig().topicName)
+const sender = sendPubSubMessage(config.pubsubConfig().topicName)
 
-void sender.send<MessageType>({ type: 'DataLoadRequest', data: {} })
+void sender<MessageType>({ type: 'DataLoadRequest', data: {} })

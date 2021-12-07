@@ -1,2 +1,9 @@
-export { pubsubConfig } from './pubsub'
-export { cloudStorageConfig } from './cloud-storage'
+import { pubsubConfig } from './pubsub'
+import { cloudStorageConfig } from './cloud-storage'
+import { httpConfig } from './http'
+
+export const config = {
+    pubsubConfig,
+    cloudStorageConfig,
+    httpConfig
+}

@@ -1,12 +1,12 @@
-import { Worker } from './worker/worker'
-import { PubSubSender, PubSubServerlessHandler } from './pubsub/pubsub'
+import { handleMessage } from './worker/worker'
+import { handlePubSubMessage } from './pubsub/pubsub'
 import { jobs, MessageType } from './setup/worker-setup'
-import { pubsubConfig } from '../config/config'
 import { Context } from '@google-cloud/functions-framework'
+import { DependencyInjection } from '../di/dependency-injection'
+import { config } from '../config/config'
 
 export const handler = async (message: { data?: string }, context: Context): Promise<void> => {
-    const worker = new PubSubServerlessHandler(
-        new Worker<MessageType>(jobs(new PubSubSender(pubsubConfig().topicName)))
-    )
-    await worker.handle(message, context)
+    await handlePubSubMessage(
+        handleMessage<MessageType>(jobs(new DependencyInjection(config)))
+    )(message, context)
 }
