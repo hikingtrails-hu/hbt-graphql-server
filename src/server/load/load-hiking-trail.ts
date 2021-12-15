@@ -20,10 +20,10 @@ export const loadHikingTrail = (httpGet: HttpGet, store: Storage) =>
             httpGet(stampGpxUrl).then(stampsFromGpx)
         ])
         logger.hikingTrailLoaded(key, stampingLocations, path)
-        await store.set(data.key + '/current.json', [{
+        await store.set(data.key + '/current.json', {
             name: trailSetup.name,
             key,
             path,
             stampingLocations
-        }])
+        })
     }

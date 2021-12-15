@@ -2,7 +2,6 @@ import { ApolloServer, gql } from 'apollo-server-cloud-functions'
 import { CloudStorageStore } from '../store/cloud-storage/cloud-storage'
 import { cloudStorageConfig } from '../config/cloud-storage'
 import { hikingTrailKeys } from '../../hbt/hiking-trails'
-import { getFromStore } from '../store/store'
 
 const typeDefs = gql`
     type Point {
@@ -29,6 +28,7 @@ const typeDefs = gql`
   
     type Query {
         hikes: [Hike]
+        hike(key: String): Hike
     }
 `
 
@@ -37,24 +37,26 @@ const resolvers = {
         hikes: async () => {
             const hikes: Array<{ name: string }> = []
             for (const key of hikingTrailKeys()) {
-                const data = await store<Array<{ name: string }>>(
-                    key + '/current.json',
-                    () => []
+                const data = await store.get<{ name: string }>(
+                    key + '/current.json'
                 )
-                data.forEach(d => hikes.push(d))
+                hikes.push(data)
             }
             return hikes
+        },
+        hike: async (parent: never, args: {key: string}) => {
+            const { key } = args
+            return await store.get<{ name: string, key: string }>(key + '/current.json')
         }
     }
 }
 
-const store = getFromStore(
+const store =
     new CloudStorageStore(
         cloudStorageConfig().cloudApiEndpoint,
         cloudStorageConfig().cloudProjectId,
         cloudStorageConfig().bucketName
     )
-)
 
 export const server = new ApolloServer({
     typeDefs,

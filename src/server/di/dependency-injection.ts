@@ -1,4 +1,3 @@
-import { getFromStore } from '../store/store'
 import { CloudStorageStore } from '../store/cloud-storage/cloud-storage'
 import { config } from '../config/config'
 import { Storage } from '../store/storage'
@@ -12,8 +11,6 @@ export class DependencyInjection {
     constructor(
         private readonly conf: typeof config
     ) {}
-
-    public getFromStore = () => getFromStore(this.storage())
 
     public httpGet = () => this.conf.httpConfig().useFake ? fakeHttpGet : httpGet
 
