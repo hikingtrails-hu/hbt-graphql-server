@@ -1,7 +1,7 @@
 import { CloudStorageStore } from '../../../src/server/store/cloud-storage/cloud-storage'
 import { generateKey, TestData } from '../test-helpers'
 
-describe.skip('CloudStorageStore', () => {
+describe('CloudStorageStore', () => {
     const store = new CloudStorageStore(
         'http://localhost:5100',
         'test',
