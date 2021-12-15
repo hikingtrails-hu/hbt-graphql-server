@@ -1,4 +1,8 @@
-import { getLinkUrlsFromHtml } from '../../../src/server/html/html'
+import {
+    getLinkUrlsFromHtml,
+    findByPattern,
+    LinkNotFoundError
+} from '../../../src/server/html/html'
 
 describe('Get link urls from HTML', () => {
     it('returns correct links', async () => {
@@ -23,5 +27,26 @@ describe('Get link urls from HTML', () => {
             'https://kektura.hu',
             'https://444.hu'
         ])
+    })
+})
+
+describe('Find by pattern', () => {
+    const links = [
+        'https://kektura.hu',
+        'https://444.hu'
+    ]
+    it('finds correct links', () => {
+        const link1 = findByPattern(links, /kektura/)
+        expect(link1).toStrictEqual('https://kektura.hu')
+        const link2 = findByPattern(links, /444/)
+        expect(link2).toStrictEqual('https://444.hu')
+        expect(() => {
+            findByPattern(links, /not-found/)
+        }).toThrow(LinkNotFoundError)
+    })
+    it('throws error if link not found', () => {
+        expect(() => {
+            findByPattern(links, /not-found/)
+        }).toThrow(LinkNotFoundError)
     })
 })
