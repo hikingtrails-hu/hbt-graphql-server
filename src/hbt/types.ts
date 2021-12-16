@@ -24,6 +24,7 @@ export interface Checkpoint {
 // }
 
 export interface StampingLocation {
+    name: string
     description: string
     position: Point
 }

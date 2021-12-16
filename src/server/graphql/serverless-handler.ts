@@ -15,6 +15,7 @@ const typeDefs = gql`
     }
     
     type StampingLocation {
+        name: String
         description: String
         position: Point
     }
