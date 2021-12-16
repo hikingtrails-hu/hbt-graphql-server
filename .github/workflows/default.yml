@@ -17,16 +17,9 @@ jobs:
         with:
           node-version: 16
           cache: 'yarn'
-#      - uses: fsouza/fake-gcs-action@v0.3.3
-#        with:
-#          version: "1.22.2"
-#          backend: memory
-#          data: data
-#          public-host: "localhost:5100"
-#          external-url: "http://localhost:5100"
       - run: make
-      - run: make verify
       - run: make dev-services
+      - run: make verify
       - uses: actions/upload-artifact@v2
         with:
           name: dist
