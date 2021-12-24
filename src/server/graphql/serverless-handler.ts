@@ -52,12 +52,11 @@ const resolvers = {
     }
 }
 
-const store =
-    new CloudStorageStore(
-        cloudStorageConfig().cloudApiEndpoint,
-        cloudStorageConfig().cloudProjectId,
-        cloudStorageConfig().bucketName
-    )
+const store = new CloudStorageStore(
+    cloudStorageConfig().cloudApiEndpoint,
+    cloudStorageConfig().cloudProjectId,
+    cloudStorageConfig().bucketName
+)
 
 export const server = new ApolloServer({
     typeDefs,

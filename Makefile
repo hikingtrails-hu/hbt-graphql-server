@@ -62,5 +62,12 @@ deploy-graphql:
 trigger-load-request: $(TSC)
 	$(BIN)/ts-node dev/worker/trigger-load-request.ts
 
+purge-queue: $(TSC)
+	$(BIN)/ts-node dev/worker/purge-queue.ts
+
 dev-services:
 	docker compose up -d
+
+stop-dev-services:
+	docker compose stop
+

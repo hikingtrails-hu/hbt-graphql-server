@@ -10,10 +10,14 @@ const main = async () => {
         const [created] = await topic.create()
         console.info(`✨ Topic created: ${created?.metadata?.name}`)
     }
-    const subscription = topic.subscription('test-subscription')
+    const subscription = topic.subscription('test-subscription', {
+        ackDeadline: 540
+    })
     const [subscriptionExists] = await subscription.exists()
     if (!subscriptionExists) {
-        const [created] = await subscription.create()
+        const [created] = await subscription.create({
+            ackDeadlineSeconds: 540
+        })
         console.info(`✨ Subscription created: ${created?.metadata?.name}`)
     }
     subscription.on('message', (message: Message) => {

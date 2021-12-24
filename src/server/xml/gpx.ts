@@ -1,4 +1,4 @@
-import { Path, Point, StampingLocation } from '../../hbt/types'
+import { Path, StampingLocation } from '../../hbt/types'
 import { parseXml } from './xml'
 
 export async function pointsFromGpx(gpx: string): Promise<Path> {
@@ -17,12 +17,6 @@ export async function pointsFromGpx(gpx: string): Promise<Path> {
     return {
         points
     }
-}
-
-export interface RawStampingLocation {
-    name: string
-    description: string
-    position: Point
 }
 
 export const stampsFromGpx = async (gpx: string): Promise<StampingLocation[]> => {

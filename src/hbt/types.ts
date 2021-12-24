@@ -29,6 +29,10 @@ export interface StampingLocation {
     position: Point
 }
 
+export interface StampingLocationOnPath extends StampingLocation {
+    pointIdx: number
+}
+
 export interface SectionEndpoint {
     name: string
     stampingLocations: StampingLocation[]

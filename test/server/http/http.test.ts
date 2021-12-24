@@ -3,7 +3,7 @@ import { createServer } from 'http'
 
 describe('HTTP Get', () => {
     it('returns response body', async () => {
-        const server = await createServer((req, res) => {
+        const server = createServer((req, res) => {
             res.statusCode = 200
             res.setHeader('Content-Type', 'text/plain')
             res.end('Test')

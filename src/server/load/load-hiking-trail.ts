@@ -5,6 +5,7 @@ import { HttpGet } from '../http/http'
 import { findByPattern, getLinkUrlsFromHtml } from '../html/html'
 import { pointsFromGpx, stampsFromGpx } from '../xml/gpx'
 import { Storage } from '../store/storage'
+import { placeStampingLocationsOnPath } from '../../hbt/map/map'
 
 export const loadHikingTrail = (httpGet: HttpGet, store: Storage) =>
     async (data: LoadHikingTrailRequestData): Promise<void> => {
@@ -19,11 +20,12 @@ export const loadHikingTrail = (httpGet: HttpGet, store: Storage) =>
             httpGet(pathGpxUrl).then(pointsFromGpx),
             httpGet(stampGpxUrl).then(stampsFromGpx)
         ])
+        const stamps = placeStampingLocationsOnPath(stampingLocations, path)
         logger.hikingTrailLoaded(key, stampingLocations, path)
         await store.set(data.key + '/current.json', {
             name: trailSetup.name,
             key,
             path,
-            stampingLocations
+            stampingLocations: stamps
         })
     }
