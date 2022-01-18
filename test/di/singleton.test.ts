@@ -9,6 +9,8 @@ class Bar {
 }
 
 class TestDI {
+    public dummy = 0
+
     public foo = () => new Foo()
 
     public bar = () => new Bar(this.foo())
@@ -22,5 +24,6 @@ describe('Singleton', () => {
         const bar = di.bar()
         foo.val = 1
         expect(bar.foo.val).toBe(1)
+        expect(di.dummy).toBe(0)
     })
 })
