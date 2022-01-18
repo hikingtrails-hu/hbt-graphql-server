@@ -9,8 +9,7 @@ describe('DataLoadRequestHandler', () => {
         const sent: MessageType[] = []
         const handler = loadData(async (message: WorkerMessage) => {
             sent.push(message as MessageType)
-        }
-        )
+        })
         await handler()
         expect(sent).toEqual([
             { type: 'LoadHikingTrailRequest', data: { key: 'okt' } },

@@ -6,6 +6,7 @@ import { sendPubSubMessage } from '../worker/pubsub/pubsub'
 import { loadHikingTrail } from '../load/load-hiking-trail'
 import { fakeHttpGet, httpGet } from '../http/http'
 import { loadData } from '../load/load-data'
+import { singleton } from './singleton'
 
 export class DependencyInjection {
     constructor(
@@ -28,4 +29,10 @@ export class DependencyInjection {
     )
 
     public loadData = () => loadData(this.sendMessage())
+}
+
+export const createDI = (conf: typeof config) => {
+    const result = new DependencyInjection(conf)
+    singleton(result)
+    return result
 }
