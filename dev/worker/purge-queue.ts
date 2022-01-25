@@ -10,7 +10,6 @@ const main = async () => {
             message.ack()
             const data = message.data.toString('utf-8')
             console.info(`1 message purged: ${data}`)
-            await subscription.close()
         })()
     })
 }

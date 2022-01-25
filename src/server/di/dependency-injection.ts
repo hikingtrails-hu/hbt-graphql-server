@@ -25,7 +25,8 @@ export class DependencyInjection {
 
     public loadHikingTrail = () => loadHikingTrail(
         this.httpGet(),
-        this.storage()
+        this.storage(),
+        this.conf.filterMapDataConfig()
     )
 
     public loadData = () => loadData(this.sendMessage())
