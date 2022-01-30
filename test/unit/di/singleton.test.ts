@@ -1,4 +1,4 @@
-import { singleton } from '../../src/server/di/singleton'
+import { singleton } from '../../../src/server/di/singleton'
 
 class Foo {
     public val = 0

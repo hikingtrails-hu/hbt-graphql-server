@@ -2,7 +2,7 @@ import {
     getLinkUrlsFromHtml,
     findByPattern,
     LinkNotFoundError
-} from '../../../src/server/html/html'
+} from '../../../../src/server/html/html'
 
 describe('Get link urls from HTML', () => {
     it('returns correct links', async () => {

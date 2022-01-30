@@ -1,4 +1,4 @@
-import { CloudStorageStore } from '../../../src/server/store/cloud-storage/cloud-storage'
+import { CloudStorageStore } from '../../../../src/server/store/cloud-storage/cloud-storage'
 import { generateKey, TestData } from '../test-helpers'
 
 describe('CloudStorageStore', () => {

@@ -1,11 +1,11 @@
-import { fileContent } from '../../../src/server/files/files'
-import { parseXml } from '../../../src/server/xml/xml'
-import { pointsFromGpx, stampsFromGpx } from '../../../src/server/xml/gpx'
-import { Point } from '../../../src/hbt/types'
+import { fileContent } from '../../../../src/server/files/files'
+import { parseXml } from '../../../../src/server/xml/xml'
+import { pointsFromGpx, stampsFromGpx } from '../../../../src/server/xml/gpx'
+import { Point } from '../../../../src/hbt/types'
 
 describe('XML', () => {
     it('parses XML', async () => {
-        const xml = await fileContent('test/server/xml/sample.xml')
+        const xml = await fileContent('test/unit/server/xml/sample.xml')
         const result = await parseXml(xml)
         expect(result.gpx.$.xmlns).toBe('http://www.topografix.com/GPX/1/1')
         expect(result.gpx.wpt[10].name[0]).toBe('Badacsonytördemic')
@@ -24,7 +24,7 @@ describe('XML', () => {
 
 describe('Points from GPX', () => {
     it('Parses GPX', async () => {
-        const gpx = await fileContent('test/server/xml/sample-path.gpx')
+        const gpx = await fileContent('test/unit/server/xml/sample-path.gpx')
         const result = await pointsFromGpx(gpx)
         expect(result.points.length).toEqual(409)
         const { elevation, lon, lat } = result.points[2] as Point

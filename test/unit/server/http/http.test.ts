@@ -1,4 +1,4 @@
-import { httpGet } from '../../../src/server/http/http'
+import { httpGet } from '../../../../src/server/http/http'
 import { createServer } from 'http'
 
 describe('HTTP Get', () => {

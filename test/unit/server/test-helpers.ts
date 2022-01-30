@@ -1,5 +1,5 @@
 import { generate as randomstring } from 'randomstring'
-import { logger } from '../../src/server/logging/logger'
+import { logger } from '../../../src/server/logging/logger'
 import { spy, SinonSpy, replace } from 'sinon'
 
 export interface TestData {

@@ -1,4 +1,4 @@
-import { hikingTrailKeys } from '../../src/hbt/hiking-trails'
+import { hikingTrailKeys } from '../../../src/hbt/hiking-trails'
 
 describe('DataLoadRequestHandler', () => {
     it('dispatches the correct jobs', () => {

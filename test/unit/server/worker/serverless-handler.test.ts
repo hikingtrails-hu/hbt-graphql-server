@@ -3,8 +3,8 @@ import {
     Jobs,
     handleMessage,
     WorkerMessage
-} from '../../../src/server/worker/worker/worker'
-import { handlePubSubMessage } from '../../../src/server/worker/pubsub/pubsub'
+} from '../../../../src/server/worker/worker/worker'
+import { handlePubSubMessage } from '../../../../src/server/worker/pubsub/pubsub'
 
 type TestMessage = WorkerMessage<'Test', Record<string, never>>
 

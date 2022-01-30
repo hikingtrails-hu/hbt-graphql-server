@@ -1,6 +1,6 @@
-import { loadData } from '../../../src/server/load/load-data'
-import { WorkerMessage } from '../../../src/server/worker/worker/worker'
-import { MessageType } from '../../../src/server/worker/setup/worker-setup'
+import { loadData } from '../../../../src/server/load/load-data'
+import { WorkerMessage } from '../../../../src/server/worker/worker/worker'
+import { MessageType } from '../../../../src/server/worker/setup/worker-setup'
 import { replaceLoggerWithSpies } from '../test-helpers'
 
 describe('DataLoadRequestHandler', () => {

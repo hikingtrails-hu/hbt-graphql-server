@@ -1,4 +1,4 @@
-import { createTopic, sendPubSubMessage } from '../../../src/server/worker/pubsub/pubsub'
+import { createTopic, sendPubSubMessage } from '../../../../src/server/worker/pubsub/pubsub'
 import { v1 as uuid } from 'uuid'
 
 describe('createTopic', () => {
