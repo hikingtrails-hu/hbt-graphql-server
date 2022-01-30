@@ -1,7 +1,7 @@
 import { ApolloServer, gql } from 'apollo-server-cloud-functions'
-import { CloudStorageStore } from '../store/cloud-storage/cloud-storage'
-import { cloudStorageConfig } from '../config/cloud-storage'
 import { hikingTrailKeys } from '../../hbt/hiking-trails'
+import { createDI } from '../di/dependency-injection'
+import { config } from '../config/config'
 
 const typeDefs = gql`
     type Point {
@@ -52,11 +52,9 @@ const resolvers = {
     }
 }
 
-const store = new CloudStorageStore(
-    cloudStorageConfig().cloudApiEndpoint,
-    cloudStorageConfig().cloudProjectId,
-    cloudStorageConfig().bucketName
-)
+const di = createDI(config)
+
+const store = di.storage()
 
 export const server = new ApolloServer({
     typeDefs,
