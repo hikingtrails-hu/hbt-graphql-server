@@ -1,36 +1,46 @@
-import { fileContent } from '../../../../src/server/files/files'
 import { parseXml } from '../../../../src/server/xml/xml'
 import { pointsFromGpx, stampsFromGpx } from '../../../../src/server/xml/gpx'
-import { Point } from '../../../../src/hbt/types'
 
 describe('XML', () => {
     it('parses XML', async () => {
-        const xml = await fileContent('test/unit/server/xml/sample.xml')
+        const xml = '<foo value="1"><bar>test</bar></foo>'
         const result = await parseXml(xml)
-        expect(result.gpx.$.xmlns).toBe('http://www.topografix.com/GPX/1/1')
-        expect(result.gpx.wpt[10].name[0]).toBe('Badacsonytördemic')
+        expect(result.foo.$.value).toBe('1')
+        expect(result.foo.bar).toEqual(['test'])
     })
 
     it('throws exception on XML error', async () => {
         const xml = '<xml>Invalid XML'
-        try {
+        await expect(async () => {
             await parseXml(xml)
-            fail('Exception not thrown')
-        } catch (e) {
-            expect(e).toBeDefined()
-        }
+        }).rejects.toThrow()
     })
 })
 
 describe('Points from GPX', () => {
     it('Parses GPX', async () => {
-        const gpx = await fileContent('test/unit/server/xml/sample-path.gpx')
+        const gpx = `<?xml version="1.0" encoding="UTF-8"?>
+            <gpx>
+                <metadata>
+                    <name>test</name>
+                </metadata>
+                <trk>
+                    <name>test</name>
+                    <desc></desc>
+                    <trkseg>
+                        <trkpt lat="1" lon="0"><ele>1</ele></trkpt>
+                        <trkpt lat="1" lon="1"><ele>2</ele></trkpt>
+                        <trkpt lat="2" lon="2"><ele>3</ele></trkpt>
+                    </trkseg>
+                </trk>
+            </gpx>
+        `
         const result = await pointsFromGpx(gpx)
-        expect(result.points.length).toEqual(409)
-        const { elevation, lon, lat } = result.points[2] as Point
-        expect(lat).toBeCloseTo(47.76365)
-        expect(lon).toBeCloseTo(18.912189)
-        expect(elevation).toBeCloseTo(109.8)
+        expect(result.points).toEqual([
+            { lat: 1, lon: 0, elevation: 1 },
+            { lat: 1, lon: 1, elevation: 2 },
+            { lat: 2, lon: 2, elevation: 3 }
+        ])
     })
 })
 
