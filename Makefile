@@ -23,7 +23,7 @@ $(DIST): $(TSC)
 	$(TSC) -p ./src --pretty
 
 .env: .env.development
-	cp .env.development .env
+	ln -s .env.development .env
 
 dev: dev-services $(TSC)
 	$(BIN)/concurrently \
