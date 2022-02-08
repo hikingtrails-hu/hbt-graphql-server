@@ -8,9 +8,7 @@ describe('Get env', () => {
     })
 
     it('throws exception on missing env variable', () => {
-        expect(() => {
-            getenv('UNDEFINED')
-        }).toThrow('UNDEFINED env var not set')
+        expect(() => getenv('UNDEFINED')).toThrow('UNDEFINED env var not set')
     })
 
     it('retrieves default value if environment variable is not set', () => {
