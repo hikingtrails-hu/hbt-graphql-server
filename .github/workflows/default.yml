@@ -8,7 +8,7 @@ jobs:
       pubsub:
         image: getalma/gcp-pubsub-emulator
     env:
-      PUBSUB_EMULATOR_HOST: pubsub:8085
+      PUBSUB_EMULATOR_HOST: localhost:5110
       GOOGLE_CLOUD_PROJECT: test-project
     steps:
       - uses: actions/checkout@v2
