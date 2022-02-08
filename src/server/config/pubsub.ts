@@ -1,6 +1,6 @@
-import { getenv } from './env'
+import { getenv } from './getenv'
 
 export const pubsubConfig = () => ({
-    topicName: getenv.strict('PUBSUB_TOPIC'),
+    topicName: getenv('PUBSUB_TOPIC'),
     subscriptionName: 'default-subscription'
 })

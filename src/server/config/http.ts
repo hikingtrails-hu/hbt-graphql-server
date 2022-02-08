@@ -1,5 +1,5 @@
-import { getenv } from './env'
+import { getenv } from './getenv'
 
 export const httpConfig = () => ({
-    useFake: getenv.loose('USE_FAKE_HTTP') === 'true' ?? false
+    useFake: getenv('USE_FAKE_HTTP', 'false') === 'true'
 })
