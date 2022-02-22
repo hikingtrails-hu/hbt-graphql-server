@@ -7,6 +7,7 @@ import { loadHikingTrail } from '../load/load-hiking-trail'
 import { fakeHttpGet, httpGet } from '../http/http'
 import { loadData } from '../load/load-data'
 import { singleton } from './singleton'
+import { placeStampingLocations } from '../load/place-stamping-locations'
 
 export class DependencyInjection {
     constructor(
@@ -26,7 +27,15 @@ export class DependencyInjection {
     public loadHikingTrail = () => loadHikingTrail(
         this.httpGet(),
         this.storage(),
-        this.conf.filterMapDataConfig()
+        this.conf.filterMapDataConfig(),
+        this.sendMessage()
+    )
+
+    public placeStampingLocations = () => placeStampingLocations(
+        this.httpGet(),
+        this.storage(),
+        this.conf.filterMapDataConfig(),
+        this.sendMessage()
     )
 
     public loadData = () => loadData(this.sendMessage())

@@ -27,6 +27,7 @@ module.exports = {
                 '@typescript-eslint/explicit-function-return-type': 'off',
                 '@typescript-eslint/restrict-template-expressions': 'off',
                 '@typescript-eslint/consistent-type-assertions': 'off',
+                '@typescript-eslint/consistent-type-definitions': 'off',
                 '@typescript-eslint/explicit-module-boundary-types': 'off'
             }
         }

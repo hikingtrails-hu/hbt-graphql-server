@@ -1,20 +1,24 @@
-import { LoadHikingTrailRequestData } from '../worker/setup/worker-setup'
+import {
+    LoadHikingTrailRequestData,
+    PlaceStampingLocationsRequestMessage
+} from '../worker/setup/worker-setup'
 import { logger } from '../logging/logger'
 import { hikingTrailsSetup } from '../../hbt/hiking-trails'
 import { HttpGet } from '../http/http'
 import { findByPattern, getLinkUrlsFromHtml } from '../html/html'
 import { pointsFromGpx, stampsFromGpx } from '../xml/gpx'
 import { Storage } from '../store/storage'
-import { placeStampingLocationsOnPath } from '../../hbt/map/map'
 import { filterMapDataConfig } from '../config/filter-map-data'
+import { SendMessage } from '../worker/worker/worker'
 
 export const loadHikingTrail = (
     httpGet: HttpGet,
     store: Storage,
-    filterConfig: ReturnType<typeof filterMapDataConfig>
+    filterConfig: ReturnType<typeof filterMapDataConfig>,
+    sendMessage: SendMessage
 ) =>
     async (data: LoadHikingTrailRequestData): Promise<void> => {
-        const { key } = data
+        const { key, loadId } = data
         logger.hikingTrailLoadRequested(key)
         const trailSetup = hikingTrailsSetup[key]
         const trailPageBody = await httpGet(trailSetup.dataHomepageUrl)
@@ -25,20 +29,18 @@ export const loadHikingTrail = (
             httpGet(pathGpxUrl).then(pointsFromGpx),
             httpGet(stampGpxUrl).then(stampsFromGpx)
         ])
-        const path = {
-            points: allPathNodes.points.filter(
-                (point, idx) => idx % filterConfig.keepEveryNthPathNode === 0
-            )
-        }
+        const pathNodes = allPathNodes.points.filter(
+            (point, idx) => idx % filterConfig.keepEveryNthPathNode === 0
+        )
         const stampingLocations = allStampingLocations.filter(
             (stampingLocation, idx) => idx % filterConfig.keepEveryNthStamp === 0
         )
-        const stamps = placeStampingLocationsOnPath(stampingLocations, path)
-        logger.hikingTrailLoaded(key, stampingLocations, path)
-        await store.set(data.key + '/current.json', {
-            name: trailSetup.name,
-            key,
-            path,
-            stampingLocations: stamps
+        await store.set(`${loadId}/${key}/loadHikingTrail.json`, {
+            pathNodes,
+            stampingLocations
+        })
+        await sendMessage<PlaceStampingLocationsRequestMessage>({
+            type: 'PlaceStampingLocationsRequest',
+            data
         })
     }
