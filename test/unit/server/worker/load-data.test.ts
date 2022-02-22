@@ -3,8 +3,15 @@ import { WorkerMessage } from '../../../../src/server/worker/worker/worker'
 import { MessageType } from '../../../../src/server/worker/setup/worker-setup'
 import { replaceLoggerWithSpies } from '../test-helpers'
 
-const uuidMatcher =
-    /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/
+const uuidMatcher = new RegExp(
+    [
+        /^[0-9a-fA-F]{8}\b-/,
+        /[0-9a-fA-F]{4}\b-/,
+        /[0-9a-fA-F]{4}\b-/,
+        /[0-9a-fA-F]{4}\b-/,
+        /[0-9a-fA-F]{12}$/
+    ].map(regex => regex.source).join('')
+)
 
 describe('DataLoadRequestHandler', () => {
     replaceLoggerWithSpies()
