@@ -3,9 +3,9 @@ import { WorkerMessage } from '../../../../src/server/worker/worker/worker'
 import { MessageType } from '../../../../src/server/worker/setup/worker-setup'
 import { replaceLoggerWithSpies } from '../test-helpers'
 
-const matchesUuid = () => expect.stringMatching(
+const uuidMatcher =
     /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/
-)
+
 
 describe('DataLoadRequestHandler', () => {
     replaceLoggerWithSpies()
@@ -15,10 +15,13 @@ describe('DataLoadRequestHandler', () => {
             sent.push(message as MessageType)
         })
         await handler()
+        const loadId = sent[0]?.data?.loadId
+        expect(loadId).toMatch(uuidMatcher)
         expect(sent).toEqual([
-            { type: 'LoadHikingTrailRequest', data: { key: 'okt', loadId: matchesUuid() } },
-            { type: 'LoadHikingTrailRequest', data: { key: 'ddk', loadId: matchesUuid() } },
-            { type: 'LoadHikingTrailRequest', data: { key: 'ak', loadId: matchesUuid() } }
+            { type: 'CheckStateRequest', data: { loadId } },
+            { type: 'LoadHikingTrailRequest', data: { key: 'okt', loadId } },
+            { type: 'LoadHikingTrailRequest', data: { key: 'ddk', loadId } },
+            { type: 'LoadHikingTrailRequest', data: { key: 'ak', loadId } }
         ])
     })
 })

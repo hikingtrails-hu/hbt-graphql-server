@@ -7,9 +7,12 @@ export type DataLoadRequestMessage = WorkerMessage<
 Record<string, never>
 >
 
-export type LoadHikingTrailRequestData = {
-    key: HikingTrailKey
+export type RequestData = {
     loadId: string
+}
+
+export type LoadHikingTrailRequestData = RequestData & {
+    key: HikingTrailKey
 }
 
 export type LoadHikingTrailRequestMessage = WorkerMessage<
@@ -22,12 +25,19 @@ export type PlaceStampingLocationsRequestMessage = WorkerMessage<
 LoadHikingTrailRequestData
 >
 
+export type CheckStateRequestMessage = WorkerMessage<
+'CheckStateRequest',
+RequestData
+>
+
 export type MessageType = DataLoadRequestMessage
 | LoadHikingTrailRequestMessage
 | PlaceStampingLocationsRequestMessage
+| CheckStateRequestMessage
 
 export const jobs = (di: DependencyInjection): Jobs<MessageType> => ({
     DataLoadRequest: di.loadData(),
     LoadHikingTrailRequest: di.loadHikingTrail(),
-    PlaceStampingLocationsRequest: di.placeStampingLocations()
+    PlaceStampingLocationsRequest: di.placeStampingLocations(),
+    CheckStateRequest: di.checkState()
 })

@@ -8,6 +8,7 @@ import { fakeHttpGet, httpGet } from '../http/http'
 import { loadData } from '../load/load-data'
 import { singleton } from './singleton'
 import { placeStampingLocations } from '../load/place-stamping-locations'
+import { checkState } from '../load/check-state'
 
 export class DependencyInjection {
     constructor(
@@ -37,6 +38,8 @@ export class DependencyInjection {
         this.conf.filterMapDataConfig(),
         this.sendMessage()
     )
+
+    public checkState = () => checkState(this.storage())
 
     public loadData = () => loadData(this.sendMessage())
 }

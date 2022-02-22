@@ -9,13 +9,15 @@ export interface Path {
 }
 
 export interface HikingTrail {
-    path: Path
-}
-
-export interface Checkpoint {
     name: string
+    path: Path
     sectionEndpoints: SectionEndpoint[]
 }
+
+// export interface Checkpoint {
+//     name: string
+//     sectionEndpoints: SectionEndpoint[]
+// }
 
 // export interface Section {
 //     path: Path
