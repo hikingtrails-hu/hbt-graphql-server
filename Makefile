@@ -1,5 +1,5 @@
 .PHONY: dev verify lint lint-fix types depcheck test watch-test trigger-load-request
-.PHONY: dev-services test-coverage
+.PHONY: start-dev-services stop-dev-services restart-dev-services test-coverage
 
 ifneq (,$(wildcard ./.env))
     include .env
@@ -65,9 +65,10 @@ trigger-load-request: $(TSC)
 purge-queue: $(TSC)
 	$(BIN)/ts-node dev/worker/purge-queue.ts
 
-dev-services:
+start-dev-services:
 	docker compose up -d
 
 stop-dev-services:
 	docker compose stop
 
+restart-dev-services: stop-dev-services start-dev-services

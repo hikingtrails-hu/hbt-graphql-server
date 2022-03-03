@@ -11,14 +11,14 @@ export const loadData = (sendMessage: SendMessage) =>
     async (): Promise<void> => {
         const loadId = uuid()
         logger.dataLoadRequested()
-        await sendMessage<CheckStateRequestMessage>({
-            type: 'CheckStateRequest',
-            data: { loadId }
-        })
         for (const key of hikingTrailKeys()) {
             await sendMessage<LoadHikingTrailRequestMessage>({
                 type: 'LoadHikingTrailRequest',
                 data: { key, loadId }
             })
         }
+        await sendMessage<CheckStateRequestMessage>({
+            type: 'CheckStateRequest',
+            data: { loadId }
+        })
     }

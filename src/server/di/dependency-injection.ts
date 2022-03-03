@@ -9,6 +9,7 @@ import { loadData } from '../load/load-data'
 import { singleton } from './singleton'
 import { placeStampingLocations } from '../load/place-stamping-locations'
 import { checkState } from '../load/check-state'
+import { EventEmitter } from 'events'
 
 export class DependencyInjection {
     constructor(
@@ -39,7 +40,9 @@ export class DependencyInjection {
         this.sendMessage()
     )
 
-    public checkState = () => checkState(this.storage())
+    public eventEmitter = () => new EventEmitter()
+
+    public checkState = () => checkState(this.storage(), this.eventEmitter())
 
     public loadData = () => loadData(this.sendMessage())
 }

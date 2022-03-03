@@ -6,7 +6,7 @@ export interface TestData {
     test: string
 }
 
-export const generateKey = () => randomstring({ length: 32, charset: 'alphanumeric' })
+export const generateKey = () => randomstring({ length: 16, charset: 'alphabetic' })
 
 type LoggerKey = keyof typeof logger
 

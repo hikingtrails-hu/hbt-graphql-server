@@ -1,0 +1,19 @@
+query Hikes {
+    hikes {
+        name
+    }
+    hike(key: "ak") {
+        name
+        key
+        stampingLocations {
+            name
+            description
+        }
+        path {
+            points {
+                lat
+                lon
+            }
+        }
+    }
+}

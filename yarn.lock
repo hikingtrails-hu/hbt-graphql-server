@@ -2792,6 +2792,11 @@ finalhandler@~1.1.2:
     statuses "~1.5.0"
     unpipe "~1.0.0"
 
+find-free-ports@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/find-free-ports/-/find-free-ports-3.0.0.tgz#8cb33bc27065cbf2f53282eea6cb0587bb7e61d8"
+  integrity sha512-C9XrjG5O1EWPHSjY/hzJaUAoyUQ+KhmiYn0zHohOpScSeWr5TqJu613iIvzI4DnIKpdcBZZ5B4ifiUA10Y2HuA==
+
 find-up@^2.0.0, find-up@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/find-up/-/find-up-2.1.0.tgz#45d1b7e506c717ddd482775a2b77920a3c0c57a7"
