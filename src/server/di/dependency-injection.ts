@@ -10,6 +10,7 @@ import { singleton } from './singleton'
 import { placeStampingLocations } from '../load/place-stamping-locations'
 import { checkState } from '../load/check-state'
 import { EventEmitter } from 'events'
+import { resolvers } from '../graphql/resolvers'
 
 export class DependencyInjection {
     constructor(
@@ -45,6 +46,8 @@ export class DependencyInjection {
     public checkState = () => checkState(this.storage(), this.eventEmitter())
 
     public loadData = () => loadData(this.sendMessage())
+
+    public graphqlResolvers = () => resolvers(this.storage())
 }
 
 export const createDI = (conf: typeof config) => {
