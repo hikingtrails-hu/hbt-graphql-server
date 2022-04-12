@@ -23,5 +23,8 @@ export const logger = {
         log(`${trail.symbol} Memory usage: ${Math.round(process.memoryUsage().heapUsed /
             1024 / 1024)} MB`
         )
+    },
+    httpRequestOk: (url: string) => {
+        log(`Request successful: ${url}`)
     }
 }

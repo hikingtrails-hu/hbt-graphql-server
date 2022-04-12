@@ -25,7 +25,7 @@ $(DIST): $(TSC)
 .env: .env.development
 	cp .env.development .env
 
-dev: dev-services $(TSC)
+dev: start-dev-services $(TSC)
 	$(BIN)/concurrently \
 		-n worker,graphql \
 		-c bgBlue,bgMagenta \

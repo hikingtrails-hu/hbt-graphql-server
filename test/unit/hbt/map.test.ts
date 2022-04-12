@@ -1,4 +1,8 @@
-import { distanceInMeters, placeStampingLocationsOnPath } from '../../../src/hbt/map/map'
+import {
+    distanceInMeters,
+    distanceInMetersOnPath,
+    placeStampingLocationsOnPath
+} from '../../../src/hbt/map/map'
 import { StampingLocation, Path } from '../../../src/hbt/types'
 
 describe('Get distance in meters', () => {
@@ -48,5 +52,30 @@ describe('Place stamping locations on path', () => {
                 pointIdx: 2
             }
         ])
+    })
+})
+
+describe('Distance on path', () => {
+    const path: Path = {
+        points: [
+            { lat: 0, lon: 0, elevation: 0 },
+            { lat: 1, lon: 0, elevation: 0 },
+            { lat: 2, lon: 0, elevation: 0 },
+            { lat: 3, lon: 0, elevation: 0 }
+        ]
+    }
+    it('returns correct distance', () => {
+        const result = distanceInMetersOnPath(path, 1, 3)
+        expect(result).toBeCloseTo(221151.48, 2)
+    })
+    it('returns 0 for same start and end point', () => {
+        const result = distanceInMetersOnPath(path, 0, 0)
+        expect(result).toBeCloseTo(0, 2)
+    })
+    it('Throw error on invalid indexes', () => {
+        expect(() => distanceInMetersOnPath(path, -1, 1)).toThrowError()
+        expect(() => distanceInMetersOnPath(path, 1, -1)).toThrowError()
+        expect(() => distanceInMetersOnPath(path, 5, 1)).toThrowError()
+        expect(() => distanceInMetersOnPath(path, 1, 5)).toThrowError()
     })
 })
