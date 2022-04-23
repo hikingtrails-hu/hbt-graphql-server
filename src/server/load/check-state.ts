@@ -3,6 +3,7 @@ import { hikingTrailKeys } from '../../hbt/hiking-trails'
 import { Storage } from '../store/storage'
 import { setImmediate } from 'timers/promises'
 import { EventEmitter } from 'events'
+import { logger } from '../logging/logger'
 
 export const checkState = (store: Storage, emitter: EventEmitter) =>
     async (data: RequestData): Promise<void> => {
@@ -18,4 +19,5 @@ export const checkState = (store: Storage, emitter: EventEmitter) =>
             }
         } while (!finish)
         emitter.emit('finished')
+        logger.finished()
     }

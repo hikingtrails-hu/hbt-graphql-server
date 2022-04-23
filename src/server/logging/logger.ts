@@ -26,5 +26,8 @@ export const logger = {
     },
     httpRequestOk: (url: string) => {
         log(`HTTP request successful: ${url}`)
+    },
+    finished: () => {
+        log('🐻 Load request finished')
     }
 }
