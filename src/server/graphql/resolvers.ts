@@ -5,7 +5,7 @@ export const resolvers = (store: Storage) => ({
     Query: {
         hikes: async () => {
             const hikes: Array<{ name: string }> = []
-            for (const key of hikingTrailKeys()) {
+            for (const key of hikingTrailKeys) {
                 const data = await store.get<{ name: string }>(
                     key + '/current.json'
                 )

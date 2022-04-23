@@ -24,6 +24,6 @@ export const hikingTrailsSetup = {
     }
 }
 
-export const hikingTrailKeys = (): HikingTrailKey[] => keys(hikingTrailsSetup) as HikingTrailKey[]
+export const hikingTrailKeys = keys(hikingTrailsSetup) as HikingTrailKey[]
 
 export type HikingTrailKey = 'okt' | 'ddk' | 'ak'

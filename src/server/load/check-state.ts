@@ -11,7 +11,7 @@ export const checkState = (store: Storage, emitter: EventEmitter) =>
         do {
             await setImmediate()
             finish = true
-            for (const hikingTrailKey of hikingTrailKeys()) {
+            for (const hikingTrailKey of hikingTrailKeys) {
                 if (!(await store.has(`${loadId}/${hikingTrailKey}/finished`))) {
                     finish = false
                 }
