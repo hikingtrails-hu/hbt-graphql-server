@@ -8,6 +8,7 @@ import { logger } from '../logging/logger'
 export const checkState = (store: Storage, emitter: EventEmitter) =>
     async (data: RequestData): Promise<void> => {
         const { loadId } = data
+        logger.checkingStateStarted()
         let finish = true
         do {
             await setImmediate()
