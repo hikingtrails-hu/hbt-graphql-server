@@ -1,7 +1,9 @@
 import { httpGet } from '../../../../src/server/http/http'
 import { createServer } from 'http'
+import { replaceLoggerWithSpies } from '../test-helpers'
 
 describe('HTTP Get', () => {
+    replaceLoggerWithSpies()
     it('returns response body', async () => {
         const server = createServer((req, res) => {
             res.statusCode = 200

@@ -37,7 +37,6 @@ export class DependencyInjection {
     public placeStampingLocations = () => placeStampingLocations(
         this.httpGet(),
         this.storage(),
-        this.conf.filterMapDataConfig(),
         this.sendMessage()
     )
 

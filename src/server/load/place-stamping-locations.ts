@@ -4,14 +4,12 @@ import { hikingTrailsSetup } from '../../hbt/hiking-trails'
 import { HttpGet } from '../http/http'
 import { Storage } from '../store/storage'
 import { placeStampingLocationsOnPath } from '../../hbt/map/map'
-import { filterMapDataConfig } from '../config/filter-map-data'
 import { SendMessage } from '../worker/worker/worker'
 import { Point, StampingLocation } from '../../hbt/types'
 
 export const placeStampingLocations = (
     httpGet: HttpGet,
     store: Storage,
-    filterConfig: ReturnType<typeof filterMapDataConfig>,
     sendMessage: SendMessage
 ) =>
     async (data: LoadHikingTrailRequestData): Promise<void> => {

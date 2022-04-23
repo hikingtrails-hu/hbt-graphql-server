@@ -72,3 +72,5 @@ stop-dev-services:
 	docker compose stop
 
 restart-dev-services: stop-dev-services start-dev-services
+
+before-commit: lint-fix verify
