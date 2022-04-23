@@ -29,7 +29,7 @@ export const logger = {
     },
     checkingStateStarted: () => {
         log('🦎 Checking state started')
-    }
+    },
     finished: () => {
         log('🐻 Load request finished')
     }
