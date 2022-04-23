@@ -1,7 +1,7 @@
 import { RequestData } from '../worker/setup/worker-setup'
 import { hikingTrailKeys } from '../../hbt/hiking-trails'
 import { Storage } from '../store/storage'
-import { setImmediate } from 'timers/promises'
+import { setTimeout } from 'timers/promises'
 import { EventEmitter } from 'events'
 import { logger } from '../logging/logger'
 
@@ -11,7 +11,7 @@ export const checkState = (store: Storage, emitter: EventEmitter) =>
         logger.checkingStateStarted()
         let finish = true
         do {
-            await setImmediate()
+            await setTimeout(2000)
             finish = true
             for (const hikingTrailKey of hikingTrailKeys) {
                 if (!(await store.has(`${loadId}/${hikingTrailKey}/finished`))) {
