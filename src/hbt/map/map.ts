@@ -11,10 +11,10 @@ export const distanceInMeters = (coord1: Point, coord2: Point): number =>
 
 export type DistanceInMetersOnPath = typeof distanceInMetersOnPath
 
-export const placeStampingLocationsOnPath = (
+export const orderStampingLocations = (
     stampingLocations: StampingLocation[],
     path: Path
-): OrderedStampingLocation[] => orderStampingLocations(
+): OrderedStampingLocation[] =>
     stampingLocations.map(stampingLocation => {
         let minDistance = Infinity
         let nearestIdx = -1
@@ -29,14 +29,9 @@ export const placeStampingLocationsOnPath = (
             ...stampingLocation,
             pointIdx: nearestIdx
         }
-    })
-)
-
-const orderStampingLocations = (
-    stampingLocations: OrderedStampingLocation[]
-): OrderedStampingLocation[] => stampingLocations.slice().sort(
-    (stamp1, stamp2) => stamp1.pointIdx - stamp2.pointIdx
-)
+    }).sort(
+        (stamp1, stamp2) => stamp1.pointIdx - stamp2.pointIdx
+    )
 
 export const distanceInMetersOnPath = (
     path: Path,
