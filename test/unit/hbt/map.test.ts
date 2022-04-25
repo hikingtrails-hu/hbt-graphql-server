@@ -1,6 +1,6 @@
 import {
     distanceInMeters,
-    distanceInMetersOnPath, orderStampingLocations,
+    distanceInMetersOnPath,
     placeStampingLocationsOnPath
 } from '../../../src/hbt/map/map'
 import { StampingLocation, Path } from '../../../src/hbt/types'
@@ -15,14 +15,15 @@ describe('Get distance in meters', () => {
     })
 })
 
-describe('Place stamping locations on path', () => {
-    it('return stamping locations with point on path', () => {
+describe('Order stamping locations on path', () => {
+    it('return stamping locations with point on path with correct order', () => {
         const path: Path = {
             points: [
                 { lat: 0, lon: 0, elevation: 0 },
                 { lat: 1, lon: 0, elevation: 0 },
                 { lat: 2, lon: 0, elevation: 0 },
-                { lat: 3, lon: 0, elevation: 0 }
+                { lat: 3, lon: 0, elevation: 0 },
+                { lat: 4, lon: 0, elevation: 0 }
             ]
         }
         const stampingLocations: StampingLocation[] = [
@@ -34,51 +35,20 @@ describe('Place stamping locations on path', () => {
             {
                 name: 'test2',
                 description: '',
-                position: { lat: 2.1, lon: 0, elevation: 0 }
-            }
-        ]
-        const result = placeStampingLocationsOnPath(stampingLocations, path)
-        expect(result).toStrictEqual([
-            {
-                name: 'test1',
-                description: '',
-                position: { lat: 0, lon: 1, elevation: 0 },
-                pointIdx: 0
-            },
-            {
-                name: 'test2',
-                description: '',
-                position: { lat: 2.1, lon: 0, elevation: 0 },
-                pointIdx: 2
-            }
-        ])
-    })
-})
-
-describe('Order stamping locations', () => {
-    it('orders locations', () => {
-        const stamps = [
-            {
-                name: 'test1',
-                description: '',
-                position: { lat: 0, lon: 1, elevation: 0 },
-                pointIdx: 0
-            },
-            {
-                name: 'test2',
-                description: '',
-                position: { lat: 2.1, lon: 0, elevation: 0 },
-                pointIdx: 5
+                position: { lat: 3.1, lon: 0, elevation: 0 }
             },
             {
                 name: 'test3',
                 description: '',
-                position: { lat: 2.1, lon: 0, elevation: 0 },
-                pointIdx: 2
+                position: { lat: 1.1, lon: 0, elevation: 0 }
             }
         ]
-        const result = orderStampingLocations(stamps)
-        expect(result).toEqual([stamps[0], stamps[2], stamps[1]])
+        const result = placeStampingLocationsOnPath(stampingLocations, path)
+        expect(result).toStrictEqual([
+            { ...stampingLocations[0], pointIdx: 0 },
+            { ...stampingLocations[2], pointIdx: 1 },
+            { ...stampingLocations[1], pointIdx: 3 }
+        ])
     })
 })
 
