@@ -41,6 +41,5 @@ export const placeStampingLocations = (
             },
             stampingLocations: stamps
         })
-        console.dir(stamps)
         await store.set(`${loadId}/${key}/finished`, {})
     }
