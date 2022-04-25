@@ -20,9 +20,6 @@ export const logger = {
         log(`${trail.symbol} ${stampingLocations.length} stamps` +
             ` and ${path.points.length} path nodes loaded for ${key}`
         )
-        log(`${trail.symbol} Memory usage: ${Math.round(process.memoryUsage().heapUsed /
-            1024 / 1024)} MB`
-        )
     },
     httpRequestOk: (url: string) => {
         log(`HTTP request successful: ${url}`)

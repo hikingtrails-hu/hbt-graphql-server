@@ -1,6 +1,6 @@
 import {
     distanceInMeters,
-    distanceInMetersOnPath,
+    distanceInMetersOnPath, orderStampingLocations,
     placeStampingLocationsOnPath
 } from '../../../src/hbt/map/map'
 import { StampingLocation, Path } from '../../../src/hbt/types'
@@ -52,6 +52,33 @@ describe('Place stamping locations on path', () => {
                 pointIdx: 2
             }
         ])
+    })
+})
+
+describe('Order stamping locations', () => {
+    it('orders locations', () => {
+        const stamps = [
+            {
+                name: 'test1',
+                description: '',
+                position: { lat: 0, lon: 1, elevation: 0 },
+                pointIdx: 0
+            },
+            {
+                name: 'test2',
+                description: '',
+                position: { lat: 2.1, lon: 0, elevation: 0 },
+                pointIdx: 5
+            },
+            {
+                name: 'test3',
+                description: '',
+                position: { lat: 2.1, lon: 0, elevation: 0 },
+                pointIdx: 2
+            }
+        ]
+        const result = orderStampingLocations(stamps)
+        expect(result).toEqual([stamps[0], stamps[2], stamps[1]])
     })
 })
 

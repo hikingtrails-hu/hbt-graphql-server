@@ -30,6 +30,12 @@ export const placeStampingLocationsOnPath = (
     })
 }
 
+export const orderStampingLocations = (
+    stampingLocations: StampingLocationOnPath[]
+): StampingLocationOnPath[] => stampingLocations.slice().sort(
+    (stamp1, stamp2) => stamp1.pointIdx - stamp2.pointIdx
+)
+
 export const distanceInMetersOnPath = (
     path: Path,
     idx1: number,

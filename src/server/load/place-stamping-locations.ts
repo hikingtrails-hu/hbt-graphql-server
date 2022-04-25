@@ -3,7 +3,7 @@ import { logger } from '../logging/logger'
 import { hikingTrailsSetup } from '../../hbt/hiking-trails'
 import { HttpGet } from '../http/http'
 import { Storage } from '../store/storage'
-import { placeStampingLocationsOnPath } from '../../hbt/map/map'
+import { orderStampingLocations, placeStampingLocationsOnPath } from '../../hbt/map/map'
 import { SendMessage } from '../worker/worker/worker'
 import { Point, StampingLocation } from '../../hbt/types'
 
@@ -22,9 +22,11 @@ export const placeStampingLocations = (
             pathNodes: Point[]
             stampingLocations: StampingLocation[]
         }>(`${loadId}/${key}/loadHikingTrail.json`)
-        const stamps = placeStampingLocationsOnPath(stampingLocations, {
-            points: pathNodes
-        })
+        const stamps = orderStampingLocations(
+            placeStampingLocationsOnPath(stampingLocations, {
+                points: pathNodes
+            })
+        )
         logger.hikingTrailLoaded(key, stampingLocations, {
             points: pathNodes
         })
