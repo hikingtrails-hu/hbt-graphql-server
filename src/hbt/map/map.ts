@@ -1,5 +1,5 @@
 import { getPreciseDistance } from 'geolib'
-import { Path, Point, StampingLocation, StampingLocationOnPath } from '../types'
+import { Path, Point, StampingLocation, OrderedStampingLocation } from '../types'
 import { strict as assert } from 'assert'
 
 export const distanceInMeters = (coord1: Point, coord2: Point): number =>
@@ -14,7 +14,7 @@ export type DistanceInMetersOnPath = typeof distanceInMetersOnPath
 export const placeStampingLocationsOnPath = (
     stampingLocations: StampingLocation[],
     path: Path
-): StampingLocationOnPath[] => {
+): OrderedStampingLocation[] => {
     return stampingLocations.map(stampingLocation => {
         let minDistance = Infinity
         let nearestIdx = -1
@@ -33,8 +33,8 @@ export const placeStampingLocationsOnPath = (
 }
 
 export const orderStampingLocations = (
-    stampingLocations: StampingLocationOnPath[]
-): StampingLocationOnPath[] => stampingLocations.slice().sort(
+    stampingLocations: OrderedStampingLocation[]
+): OrderedStampingLocation[] => stampingLocations.slice().sort(
     (stamp1, stamp2) => stamp1.pointIdx - stamp2.pointIdx
 )
 

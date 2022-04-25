@@ -31,7 +31,7 @@ export interface StampingLocation {
     position: Point
 }
 
-export interface StampingLocationOnPath extends StampingLocation {
+export interface OrderedStampingLocation extends StampingLocation {
     pointIdx: number
 }
 
