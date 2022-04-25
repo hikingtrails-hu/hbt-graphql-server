@@ -3,9 +3,9 @@ import { logger } from '../logging/logger'
 import { hikingTrailsSetup } from '../../hbt/hiking-trails'
 import { HttpGet } from '../http/http'
 import { Storage } from '../store/storage'
-import { orderStampingLocations } from '../../hbt/map/map'
 import { SendMessage } from '../worker/worker/worker'
 import { Point, StampingLocation } from '../../hbt/types'
+import { orderStampingLocations } from '../../hbt/map/path'
 
 export const placeStampingLocations = (
     httpGet: HttpGet,

@@ -1,13 +1,6 @@
-import { getPreciseDistance } from 'geolib'
 import { Path, Point, StampingLocation, OrderedStampingLocation } from '../types'
 import { strict as assert } from 'assert'
-
-export const distanceInMeters = (coord1: Point, coord2: Point): number =>
-    getPreciseDistance(
-        { longitude: coord1.lon, latitude: coord1.lat },
-        { longitude: coord2.lon, latitude: coord2.lat },
-        0.001
-    )
+import { distanceInMeters } from './distance'
 
 export type DistanceInMetersOnPath = typeof distanceInMetersOnPath
 

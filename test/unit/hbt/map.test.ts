@@ -1,9 +1,6 @@
-import {
-    distanceInMeters,
-    distanceInMetersOnPath,
-    orderStampingLocations
-} from '../../../src/hbt/map/map'
+import { distanceInMeters } from '../../../src/hbt/map/distance'
 import { StampingLocation, Path } from '../../../src/hbt/types'
+import { distanceInMetersOnPath, orderStampingLocations } from '../../../src/hbt/map/path'
 
 describe('Get distance in meters', () => {
     it('calculates distance between Debrecen and Budapest', () => {
@@ -76,3 +73,5 @@ describe('Distance on path', () => {
         expect(() => distanceInMetersOnPath(path, 1, 5)).toThrowError()
     })
 })
+
+// describe('Measure stamping location distances on path' )
