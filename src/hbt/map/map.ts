@@ -9,6 +9,8 @@ export const distanceInMeters = (coord1: Point, coord2: Point): number =>
         0.001
     )
 
+export type DistanceInMetersOnPath = typeof distanceInMetersOnPath
+
 export const placeStampingLocationsOnPath = (
     stampingLocations: StampingLocation[],
     path: Path
