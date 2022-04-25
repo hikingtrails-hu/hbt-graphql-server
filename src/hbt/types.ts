@@ -35,6 +35,10 @@ export interface OrderedStampingLocation extends StampingLocation {
     pointIdx: number
 }
 
+export interface MeasuredStampingLocation extends OrderedStampingLocation {
+    distanceInMetersFromNextStampingLocation: number | null
+}
+
 export interface SectionEndpoint {
     name: string
     stampingLocations: StampingLocation[]

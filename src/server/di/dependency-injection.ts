@@ -11,6 +11,8 @@ import { placeStampingLocations } from '../load/place-stamping-locations'
 import { checkState } from '../load/check-state'
 import { EventEmitter } from 'events'
 import { resolvers } from '../graphql/resolvers'
+import { measureStampingLocationDistances } from '../../hbt/map/path'
+import { distanceInMetersOnPath } from '../../hbt/map/distance'
 
 export class DependencyInjection {
     constructor(
@@ -34,10 +36,17 @@ export class DependencyInjection {
         this.sendMessage()
     )
 
+    public distanceInMetersOnPath = () => distanceInMetersOnPath
+
+    public measureStampingLocationDistances = () => measureStampingLocationDistances(
+        this.distanceInMetersOnPath()
+    )
+
     public placeStampingLocations = () => placeStampingLocations(
         this.httpGet(),
         this.storage(),
-        this.sendMessage()
+        this.sendMessage(),
+        this.measureStampingLocationDistances()
     )
 
     public eventEmitter = () => new EventEmitter()

@@ -1,6 +1,6 @@
 import { distanceInMeters, distanceInMetersOnPath } from '../../../src/hbt/map/distance'
 import { StampingLocation, Path } from '../../../src/hbt/types'
-import { orderStampingLocations } from '../../../src/hbt/map/path'
+import { measureStampingLocationDistances, orderStampingLocations } from '../../../src/hbt/map/path'
 
 describe('Get distance in meters', () => {
     it('calculates distance between Debrecen and Budapest', () => {
@@ -74,4 +74,36 @@ describe('Distance on path', () => {
     })
 })
 
-// describe('Measure stamping location distances on path' )
+describe('Measure stamping location distances on path', () => {
+    it('measures distances', () => {
+        const measure = measureStampingLocationDistances(
+            (path, idx1, idx2) => Math.abs(idx1 - idx2)
+        )
+        const stamps = [
+            {
+                name: 'test1',
+                description: '',
+                position: { lat: 0, lon: 0, elevation: 0 },
+                pointIdx: 1
+            },
+            {
+                name: 'test2',
+                description: '',
+                position: { lat: 0, lon: 0, elevation: 0 },
+                pointIdx: 3
+            },
+            {
+                name: 'test3',
+                description: '',
+                position: { lat: 0, lon: 0, elevation: 0 },
+                pointIdx: 10
+            }
+        ]
+        const result = measure(stamps, { points: [] })
+        expect(result).toStrictEqual([
+            { ...stamps[0], distanceInMetersFromNextStampingLocation: 2 },
+            { ...stamps[1], distanceInMetersFromNextStampingLocation: 7 },
+            { ...stamps[2], distanceInMetersFromNextStampingLocation: null }
+        ])
+    })
+})

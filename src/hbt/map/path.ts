@@ -1,5 +1,5 @@
-import { OrderedStampingLocation, Path, StampingLocation } from '../types'
-import { distanceInMeters } from './distance'
+import { MeasuredStampingLocation, OrderedStampingLocation, Path, StampingLocation } from '../types'
+import { distanceInMeters, DistanceInMetersOnPath } from './distance'
 
 export const orderStampingLocations = (
     stampingLocations: StampingLocation[],
@@ -22,3 +22,23 @@ export const orderStampingLocations = (
     }).sort(
         (stamp1, stamp2) => stamp1.pointIdx - stamp2.pointIdx
     )
+
+export type MeasureStampingLocationDistances = ReturnType<typeof measureStampingLocationDistances>
+
+export const measureStampingLocationDistances = (
+    distanceInMetersOnPath: DistanceInMetersOnPath
+) => (
+    stampingLocations: OrderedStampingLocation[],
+    path: Path
+): MeasuredStampingLocation[] => {
+    return stampingLocations.map((stampingLocation, idx) => ({
+        ...stampingLocation,
+        distanceInMetersFromNextStampingLocation: idx === stampingLocations.length - 1
+            ? null
+            : distanceInMetersOnPath(
+                path,
+                stampingLocation.pointIdx,
+                (stampingLocations[idx + 1] as OrderedStampingLocation).pointIdx
+            )
+    }))
+}

@@ -5,12 +5,13 @@ import { HttpGet } from '../http/http'
 import { Storage } from '../store/storage'
 import { SendMessage } from '../worker/worker/worker'
 import { Point, StampingLocation } from '../../hbt/types'
-import { orderStampingLocations } from '../../hbt/map/path'
+import { MeasureStampingLocationDistances, orderStampingLocations } from '../../hbt/map/path'
 
 export const placeStampingLocations = (
     httpGet: HttpGet,
     store: Storage,
-    sendMessage: SendMessage
+    sendMessage: SendMessage,
+    measureStampingLocationDistances: MeasureStampingLocationDistances
 ) =>
     async (data: LoadHikingTrailRequestData): Promise<void> => {
         const { key, loadId } = data
@@ -22,9 +23,13 @@ export const placeStampingLocations = (
             pathNodes: Point[]
             stampingLocations: StampingLocation[]
         }>(`${loadId}/${key}/loadHikingTrail.json`)
-        const stamps = orderStampingLocations(stampingLocations, {
-            points: pathNodes
-        })
+        const stamps = measureStampingLocationDistances(
+            orderStampingLocations(stampingLocations, {
+                points: pathNodes
+            }), {
+                points: pathNodes
+            }
+        )
         logger.hikingTrailLoaded(key, stampingLocations, {
             points: pathNodes
         })
@@ -36,5 +41,6 @@ export const placeStampingLocations = (
             },
             stampingLocations: stamps
         })
+        console.dir(stamps)
         await store.set(`${loadId}/${key}/finished`, {})
     }
