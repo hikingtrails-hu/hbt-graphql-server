@@ -41,5 +41,5 @@ export interface MeasuredStampingLocation extends OrderedStampingLocation {
 
 export interface SectionEndpoint {
     name: string
-    stampingLocations: StampingLocation[]
+    stampingLocations: MeasuredStampingLocation[]
 }

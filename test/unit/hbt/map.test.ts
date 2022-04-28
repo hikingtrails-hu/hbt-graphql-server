@@ -1,6 +1,10 @@
 import { distanceInMeters, distanceInMetersOnPath } from '../../../src/hbt/map/distance'
-import { StampingLocation, Path } from '../../../src/hbt/types'
+import {
+    StampingLocation,
+    Path
+} from '../../../src/hbt/types'
 import { measureStampingLocationDistances, orderStampingLocations } from '../../../src/hbt/map/path'
+import { groupSectionEndpoints } from '../../../src/hbt/map/sections'
 
 describe('Get distance in meters', () => {
     it('calculates distance between Debrecen and Budapest', () => {
@@ -104,6 +108,70 @@ describe('Measure stamping location distances on path', () => {
             { ...stamps[0], distanceInMetersFromNextStampingLocation: 2 },
             { ...stamps[1], distanceInMetersFromNextStampingLocation: 7 },
             { ...stamps[2], distanceInMetersFromNextStampingLocation: null }
+        ])
+    })
+})
+
+describe('Calculate section endpoints', () => {
+    it('group endpoints by name', () => {
+        const stamps = [
+            {
+                name: 'test1',
+                description: '',
+                position: { lat: 1, lon: 0, elevation: 0 },
+                pointIdx: 1,
+                distanceInMetersFromNextStampingLocation: 10
+            },
+            {
+                name: 'test1',
+                description: '',
+                position: { lat: 1, lon: 0.1, elevation: 0 },
+                pointIdx: 3,
+                distanceInMetersFromNextStampingLocation: 12
+            },
+            {
+                name: 'test1',
+                description: '',
+                position: { lat: 1.5, lon: 0.1, elevation: 0 },
+                pointIdx: 4,
+                distanceInMetersFromNextStampingLocation: 20
+            },
+            {
+                name: 'test2',
+                description: '',
+                position: { lat: 1.5, lon: 0.1, elevation: 0 },
+                pointIdx: 30,
+                distanceInMetersFromNextStampingLocation: 200
+            },
+            {
+                name: 'test3',
+                description: '',
+                position: { lat: 2, lon: 0.5, elevation: 0 },
+                pointIdx: 50,
+                distanceInMetersFromNextStampingLocation: 1
+            },
+            {
+                name: 'test3',
+                description: '',
+                position: { lat: 2.1, lon: 0.5, elevation: 0 },
+                pointIdx: 55,
+                distanceInMetersFromNextStampingLocation: null
+            }
+        ]
+        const result = groupSectionEndpoints(stamps)
+        expect(result).toStrictEqual([
+            {
+                name: 'test1',
+                stampingLocations: stamps.slice(0, 3)
+            },
+            {
+                name: 'test2',
+                stampingLocations: stamps.slice(3, 4)
+            },
+            {
+                name: 'test3',
+                stampingLocations: stamps.slice(4)
+            }
         ])
     })
 })
