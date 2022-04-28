@@ -158,7 +158,7 @@ describe('Calculate section endpoints', () => {
                 distanceInMetersFromNextStampingLocation: null
             }
         ]
-        const result = groupSectionEndpoints(stamps)
+        const result = groupSectionEndpoints(1000)(stamps)
         expect(result).toStrictEqual([
             {
                 name: 'test1',
@@ -171,6 +171,35 @@ describe('Calculate section endpoints', () => {
             {
                 name: 'test3',
                 stampingLocations: stamps.slice(4)
+            }
+        ])
+    })
+    it('group endpoints by distance', () => {
+        const stamps = [
+            {
+                name: 'test1',
+                description: '',
+                position: { lat: 1, lon: 0, elevation: 0 },
+                pointIdx: 1,
+                distanceInMetersFromNextStampingLocation: 10
+            },
+            {
+                name: 'test1',
+                description: '',
+                position: { lat: 1, lon: 0.1, elevation: 0 },
+                pointIdx: 3,
+                distanceInMetersFromNextStampingLocation: 0
+            }
+        ]
+        const result = groupSectionEndpoints(5)(stamps)
+        expect(result).toStrictEqual([
+            {
+                name: 'test1',
+                stampingLocations: stamps.slice(0, 1)
+            },
+            {
+                name: 'test1',
+                stampingLocations: stamps.slice(1)
             }
         ])
     })
