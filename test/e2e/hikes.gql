@@ -5,16 +5,14 @@ query Hikes {
     hike(key: "ak") {
         name
         key
-        sectionEndpoints {
+        stampingLocations {
             name
-            stampingLocations {
-                name
-                description
-                position {
-                    lat
-                    lon
-                    elevation
-                }
+            description
+        }
+        path {
+            points {
+                lat
+                lon
             }
         }
     }
