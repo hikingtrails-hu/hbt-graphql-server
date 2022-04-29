@@ -1,3 +1,3 @@
 export const mapConfig = () => ({
-    sameSectionEndpointThresholdInMeters: 500
+    sameSectionEndpointThresholdInMeters: 1000
 })
