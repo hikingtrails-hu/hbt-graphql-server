@@ -15,8 +15,6 @@ query Hikes {
                     lon
                     elevation
                 }
-                pointIdx
-                distanceInMetersFromNextStampingLocation
             }
         }
     }
