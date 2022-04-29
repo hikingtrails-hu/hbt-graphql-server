@@ -25,6 +25,11 @@ export type PlaceStampingLocationsRequestMessage = WorkerMessage<
 LoadHikingTrailRequestData
 >
 
+export type PlaceSecionEndpointsRequestMessage = WorkerMessage<
+'PlaceSecionEndpointsRequestMessage',
+LoadHikingTrailRequestData
+>
+
 export type CheckStateRequestMessage = WorkerMessage<
 'CheckStateRequest',
 RequestData
@@ -33,11 +38,13 @@ RequestData
 export type MessageType = DataLoadRequestMessage
 | LoadHikingTrailRequestMessage
 | PlaceStampingLocationsRequestMessage
+| PlaceSecionEndpointsRequestMessage
 | CheckStateRequestMessage
 
 export const jobs = (di: DependencyInjection): Jobs<MessageType> => ({
     DataLoadRequest: di.loadData(),
     LoadHikingTrailRequest: di.loadHikingTrail(),
     PlaceStampingLocationsRequest: di.placeStampingLocations(),
-    CheckStateRequest: di.checkState()
+    CheckStateRequest: di.checkState(),
+    PlaceSecionEndpointsRequestMessage: di.placeSecionEndpoints()
 })

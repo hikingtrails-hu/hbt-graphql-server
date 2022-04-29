@@ -1,5 +1,7 @@
 import { MeasuredStampingLocation, SectionEndpoint } from '../types'
 
+export type GroupSectionEndpoints = ReturnType<typeof groupSectionEndpoints>
+
 export const groupSectionEndpoints = (distanceTreshold: number) => {
     const isSameSectionEndPoint = (
         last: SectionEndpoint,

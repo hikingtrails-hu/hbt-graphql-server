@@ -15,7 +15,7 @@ export const resolvers = (store: Storage) => ({
         },
         hike: async (parent: never, args: {key: string}) => {
             const { key } = args
-            return await store.get<{ name: string, key: string }>(key + '/current.json')
+            const result = await store.get<{ name: string, key: string }>(key + '/current.json')
         }
     }
 })
