@@ -16,17 +16,12 @@ export const typeDefs = gql`
         description: String
         position: Point
     }
-    
-    type SectionEndpoint {
-        name: String
-        stampingLocations: [StampingLocation]
-    }
-    
+
     type Hike {
         name: String
         key: String
         path: Path
-        sectionEndpoints: [SectionEndpoint]
+        stampingLocations: [StampingLocation]
     }
 
     type Query {

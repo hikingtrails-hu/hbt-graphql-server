@@ -13,8 +13,6 @@ import { EventEmitter } from 'events'
 import { resolvers } from '../graphql/resolvers'
 import { measureStampingLocationDistances } from '../../hbt/map/path'
 import { distanceInMetersOnPath } from '../../hbt/map/distance'
-import { placeSecionEndpoints } from '../load/place-section-endpoints'
-import { groupSectionEndpoints } from '../../hbt/map/sections'
 
 export class DependencyInjection {
     constructor(
@@ -58,16 +56,6 @@ export class DependencyInjection {
     public loadData = () => loadData(this.sendMessage())
 
     public graphqlResolvers = () => resolvers(this.storage())
-
-    public placeSecionEndpoints = () => placeSecionEndpoints(
-        this.storage(),
-        this.sendMessage(),
-        this.groupSectionEndpoints()
-    )
-
-    public groupSectionEndpoints = () => groupSectionEndpoints(
-        this.conf.mapConfig().sameSectionEndpointThresholdInMeters
-    )
 }
 
 export const createDI = (conf: typeof config) => {

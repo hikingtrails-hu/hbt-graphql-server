@@ -1,4 +1,7 @@
-import { LoadHikingTrailRequestData } from '../worker/setup/worker-setup'
+import {
+    LoadHikingTrailRequestData,
+    PlaceStampingLocationsRequestMessage
+} from '../worker/setup/worker-setup'
 import { logger } from '../logging/logger'
 import { hikingTrailsSetup } from '../../hbt/hiking-trails'
 import { HttpGet } from '../http/http'
@@ -36,7 +39,7 @@ export const loadHikingTrail = (
             pathNodes,
             stampingLocations
         })
-        await sendMessage({
+        await sendMessage<PlaceStampingLocationsRequestMessage>({
             type: 'PlaceStampingLocationsRequest',
             data
         })

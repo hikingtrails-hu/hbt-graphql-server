@@ -1,4 +1,5 @@
 import { LoadHikingTrailRequestData } from '../worker/setup/worker-setup'
+import { logger } from '../logging/logger'
 import { hikingTrailsSetup } from '../../hbt/hiking-trails'
 import { HttpGet } from '../http/http'
 import { Storage } from '../store/storage'
@@ -29,6 +30,9 @@ export const placeStampingLocations = (
                 points: pathNodes
             }
         )
+        logger.hikingTrailLoaded(key, stampingLocations, {
+            points: pathNodes
+        })
         await store.set(data.key + '/current.json', {
             name: trailSetup.name,
             key,
@@ -37,12 +41,5 @@ export const placeStampingLocations = (
             },
             stampingLocations: stamps
         })
-        await store.set(`${loadId}/${key}/placeStampingLocations.json`, {
-            pathNodes,
-            stamps
-        })
-        await sendMessage({
-            type: 'PlaceSecionEndpointsRequestMessage',
-            data
-        })
+        await store.set(`${loadId}/${key}/finished`, {})
     }
