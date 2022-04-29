@@ -8,6 +8,8 @@ query Hikes {
         stampingLocations {
             name
             description
+            pointIdx
+            distanceInMetersFromNextStampingLocation
         }
         path {
             points {
