@@ -1,15 +1,15 @@
 query Hikes {
-    hikes {
+    hikingTrails {
         name
     }
-    hike(key: "ak") {
+    hikingTrail(key: "ak") {
         name
         key
-        stampingLocations {
+        stamps {
             name
             description
             pointIdx
-            distanceInMetersFromNextStampingLocation
+            distanceFromNext
         }
         path {
             points {

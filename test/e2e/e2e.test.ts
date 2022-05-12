@@ -97,12 +97,12 @@ describe(('End to end test'), () => {
         // eslint-disable-next-line
         const data1 = await graphqlRequest(`http://localhost:${port}/`, 'introspection.gql') as any
         expect(data1.data.data.__schema.types).toContainEqual(
-            expect.objectContaining({ name: 'Hike' })
+            expect.objectContaining({ name: 'HikingTrail' })
         )
 
         // eslint-disable-next-line
         const data2 = await graphqlRequest(`http://localhost:${port}/`, 'hikes.gql') as any
-        expect(data2.data.data.hikes).toContainEqual(
+        expect(data2.data.data.hikingTrails).toContainEqual(
             expect.objectContaining({ name: 'Országos Kéktúra' })
         )
 

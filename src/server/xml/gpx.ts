@@ -1,4 +1,4 @@
-import { Path, StampingLocation } from '../../hbt/types'
+import { Path, Loading } from '@hikingtrails-hu/hikingtrails-lib'
 import { parseXml } from './xml'
 
 export async function pointsFromGpx(gpx: string): Promise<Path> {
@@ -19,7 +19,7 @@ export async function pointsFromGpx(gpx: string): Promise<Path> {
     }
 }
 
-export const stampsFromGpx = async (gpx: string): Promise<StampingLocation[]> => {
+export const stampsFromGpx = async (gpx: string): Promise<Loading.RawStampData[]> => {
     const data = await parseXml(gpx)
     return data.gpx
         .wpt

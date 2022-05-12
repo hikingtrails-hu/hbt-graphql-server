@@ -1,45 +1,37 @@
 import { LoadHikingTrailRequestData } from '../worker/setup/worker-setup'
-import { logger } from '../logging/logger'
 import { hikingTrailsSetup } from '../../hbt/hiking-trails'
 import { HttpGet } from '../http/http'
 import { Storage } from '../store/storage'
 import { SendMessage } from '../worker/worker/worker'
-import { Point, StampingLocation } from '../../hbt/types'
-import { MeasureStampingLocationDistances, orderStampingLocations } from '../../hbt/map/path'
+import {
+    Point, Loading, orderAndMeasureStamps,
+    DistanceInMeters
+} from '@hikingtrails-hu/hikingtrails-lib'
 
 export const placeStampingLocations = (
     httpGet: HttpGet,
     store: Storage,
     sendMessage: SendMessage,
-    measureStampingLocationDistances: MeasureStampingLocationDistances
+    distanceInMeters: DistanceInMeters
 ) =>
     async (data: LoadHikingTrailRequestData): Promise<void> => {
         const { key, loadId } = data
         const trailSetup = hikingTrailsSetup[key]
         const {
             pathNodes,
-            stampingLocations
+            rawStamps
         } = await store.get<{
             pathNodes: Point[]
-            stampingLocations: StampingLocation[]
+            rawStamps: Loading.RawStampData[]
         }>(`${loadId}/${key}/loadHikingTrail.json`)
-        const stamps = measureStampingLocationDistances(
-            orderStampingLocations(stampingLocations, {
-                points: pathNodes
-            }), {
-                points: pathNodes
-            }
-        )
-        logger.hikingTrailLoaded(key, stampingLocations, {
-            points: pathNodes
+        const stampData = orderAndMeasureStamps(distanceInMeters)({
+            path: { points: pathNodes },
+            rawStampData: rawStamps
         })
         await store.set(data.key + '/current.json', {
             name: trailSetup.name,
             key,
-            path: {
-                points: pathNodes
-            },
-            stampingLocations: stamps
+            ...stampData
         })
         await store.set(`${loadId}/${key}/finished`, {})
     }

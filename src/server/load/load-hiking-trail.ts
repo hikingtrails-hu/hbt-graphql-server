@@ -32,12 +32,12 @@ export const loadHikingTrail = (
         const pathNodes = allPathNodes.points.filter(
             (point, idx) => idx % filterConfig.keepEveryNthPathNode === 0
         )
-        const stampingLocations = allStampingLocations.filter(
+        const rawStamps = allStampingLocations.filter(
             (stampingLocation, idx) => idx % filterConfig.keepEveryNthStamp === 0
         )
         await store.set(`${loadId}/${key}/loadHikingTrail.json`, {
             pathNodes,
-            stampingLocations
+            rawStamps
         })
         await sendMessage<PlaceStampingLocationsRequestMessage>({
             type: 'PlaceStampingLocationsRequest',

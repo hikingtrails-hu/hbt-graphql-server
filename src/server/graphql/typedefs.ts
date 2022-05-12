@@ -11,23 +11,23 @@ export const typeDefs = gql`
         points: [Point!]!
     }
 
-    type StampingLocation {
+    type Stamp {
         name: String!
         description: String!
         position: Point!
         pointIdx: Int!
-        distanceInMetersFromNextStampingLocation: Float
+        distanceFromNext: Float
     }
 
-    type Hike {
+    type HikingTrail {
         name: String!
         key: String!
         path: Path!
-        stampingLocations: [StampingLocation!]!
+        stamps: [Stamp!]!
     }
 
     type Query {
-        hikes: [Hike!]!
-        hike(key: String!): Hike!
+        hikingTrails: [HikingTrail!]!
+        hikingTrail(key: String!): HikingTrail!
     }
 `
