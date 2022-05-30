@@ -51,7 +51,7 @@ lint-fix: $(TSC)
 	$(BIN)/eslint . --fix
 
 depcheck: $(TSC)
-	$(BIN)/depcheck --ignores="depcheck,nodemon"
+	$(BIN)/depcheck --ignores="depcheck,nodemon,ts-node,apollo-server,apollo-server-core"
 
 deploy-worker:
 	DEPLOY_SERVICE=worker ./deploy.sh

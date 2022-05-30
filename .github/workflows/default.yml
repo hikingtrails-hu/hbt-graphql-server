@@ -21,6 +21,7 @@ jobs:
       - run: make .env
       - run: make start-dev-services
       - run: make verify
+      - run: make depcheck
       - uses: actions/upload-artifact@v2
         with:
           name: dist
